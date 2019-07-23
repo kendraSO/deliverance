@@ -612,8 +612,17 @@ class DeliveranceMailChimpList extends DeliveranceList
 		$selected_interests = array_key_exists('interests', $info) ?
 			$info['interests'] : [];
 
+		if (isset($info['interests']['deactivate'])) {
+			$deactivated_interests = $info['interests']['deactivate'];
+			unset($info['interests']['deactivate']);
+
+			foreach ($deactivated_interests as $deactivated_interest) {
+				$interests->{$deactivated_interest} = false;
+			}
+		}
+
 		foreach ($selected_interests as $interest) {
-			$interests->{$interest} = true;
+				$interests->{$interest} = true;
 		}
 
 		return $interests;
